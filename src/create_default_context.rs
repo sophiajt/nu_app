@@ -1,3 +1,4 @@
+use nu_cmd_lang::*;
 use nu_command::*;
 use nu_protocol::engine::{EngineState, StateWorkingSet};
 
@@ -13,24 +14,11 @@ pub fn create_default_context() -> EngineState {
             };
         }
 
-        // If there are commands that have the same name as default declarations,
-        // they have to be registered before the main declarations. This helps to make
-        // them only accessible if the correct input value category is used with the
-        // declaration
-        #[cfg(feature = "dataframe")]
-        add_dataframe_decls(&mut working_set);
-
-        // Database-related
-        // Adds all related commands to query databases
-        #[cfg(feature = "sqlite")]
-        add_database_decls(&mut working_set);
-
         // Core
         bind_command! {
             Alias,
             Ast,
             Break,
-            Commandline,
             Const,
             Continue,
             Debug,
@@ -92,7 +80,6 @@ pub fn create_default_context() -> EngineState {
             DropColumn,
             DropNth,
             Each,
-            EachWhile,
             Empty,
             Enumerate,
             Every,
@@ -121,12 +108,6 @@ pub fn create_default_context() -> EngineState {
             Reject,
             Rename,
             Reverse,
-            Roll,
-            RollDown,
-            RollUp,
-            RollLeft,
-            RollRight,
-            Rotate,
             Select,
             Shuffle,
             Skip,
@@ -140,7 +121,6 @@ pub fn create_default_context() -> EngineState {
             UniqBy,
             Upsert,
             Update,
-            UpdateCells,
             Values,
             Where,
             Window,
@@ -150,9 +130,7 @@ pub fn create_default_context() -> EngineState {
 
         // Misc
         bind_command! {
-            History,
             Tutor,
-            HistorySession,
         };
 
         // Path
@@ -171,7 +149,6 @@ pub fn create_default_context() -> EngineState {
 
         // System
         bind_command! {
-            Benchmark,
             Complete,
             External,
             NuCheck,
@@ -203,8 +180,6 @@ pub fn create_default_context() -> EngineState {
             DecodeBase64,
             EncodeBase64,
             DetectColumns,
-            Format,
-            FileSize,
             Parse,
             Size,
             Split,
@@ -213,43 +188,18 @@ pub fn create_default_context() -> EngineState {
             SplitRow,
             SplitWords,
             Str,
-            StrCamelCase,
             StrCapitalize,
-            StrCollect,
             StrContains,
-            StrDistance,
             StrDowncase,
-            StrEndswith,
             StrJoin,
             StrReplace,
             StrIndexOf,
-            StrKebabCase,
             StrLength,
-            StrLpad,
-            StrPascalCase,
-            StrReverse,
-            StrRpad,
-            StrScreamingSnakeCase,
-            StrSnakeCase,
             StrStartsWith,
             StrSubstring,
             StrTrim,
-            StrTitleCase,
             StrUpcase
         };
-
-        // Bits
-        bind_command! {
-            Bits,
-            BitsAnd,
-            BitsNot,
-            BitsOr,
-            BitsXor,
-            BitsRotateLeft,
-            BitsRotateRight,
-            BitsShiftLeft,
-            BitsShiftRight,
-        }
 
         // Bytes
         bind_command! {
@@ -286,17 +236,11 @@ pub fn create_default_context() -> EngineState {
         // Platform
         bind_command! {
             Ansi,
-            AnsiGradient,
             AnsiStrip,
-            AnsiLink,
             Clear,
             Du,
-            KeybindingsDefault,
             Input,
-            KeybindingsListen,
-            Keybindings,
             Kill,
-            KeybindingsList,
             Sleep,
             TermSize,
         };
@@ -315,36 +259,25 @@ pub fn create_default_context() -> EngineState {
 
         // Shells
         bind_command! {
-            Enter,
             Exit,
-            GotoShell,
-            NextShell,
-            PrevShell,
-            Shells,
         };
 
         // Formats
         bind_command! {
             From,
             FromCsv,
-            FromEml,
-            FromIcs,
-            FromIni,
             FromJson,
             FromNuon,
             FromOds,
             FromSsv,
             FromToml,
             FromTsv,
-            FromUrl,
-            FromVcf,
             FromXlsx,
             FromXml,
             FromYaml,
             FromYml,
             To,
             ToCsv,
-            ToHtml,
             ToJson,
             ToMd,
             ToNuon,
@@ -363,12 +296,10 @@ pub fn create_default_context() -> EngineState {
         bind_command! {
             Griddle,
             Table,
-            Explore,
         };
 
         // Conversions
         bind_command! {
-            Fmt,
             Into,
             IntoBool,
             IntoBinary,
@@ -383,7 +314,6 @@ pub fn create_default_context() -> EngineState {
 
         // Env
         bind_command! {
-            Env,
             ExportEnv,
             LetEnv,
             LoadEnv,
@@ -412,22 +342,6 @@ pub fn create_default_context() -> EngineState {
             MathStddev,
             MathSum,
             MathVariance,
-            MathSin,
-            MathCos,
-            MathTan,
-            MathSinH,
-            MathCosH,
-            MathTanH,
-            MathArcSin,
-            MathArcCos,
-            MathArcTan,
-            MathArcSinH,
-            MathArcCosH,
-            MathArcTanH,
-            MathPi,
-            MathTau,
-            MathEuler,
-            MathLn,
             MathLog,
         };
 
@@ -478,13 +392,7 @@ pub fn create_default_context() -> EngineState {
 
         // Deprecated
         bind_command! {
-            HashBase64,
             Source,
-            StrDatetimeDeprecated,
-            StrDecimalDeprecated,
-            StrIntDeprecated,
-            StrFindReplaceDeprecated,
-            MathEvalDeprecated,
         };
 
         #[cfg(feature = "plugin")]

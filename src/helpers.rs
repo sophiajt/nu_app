@@ -57,16 +57,15 @@ pub fn eval_source(
 ) -> bool {
     let (block, delta) = {
         let mut working_set = StateWorkingSet::new(engine_state);
-        let (output, err) = parse(
+        let output = parse(
             &mut working_set,
             Some(fname), // format!("entry #{}", entry_num)
             source,
             false,
-            &[],
         );
-        if let Some(err) = err {
+        if let Some(err) = working_set.parse_errors.first() {
             set_last_exit_code(stack, 1);
-            report_error(&working_set, &err);
+            report_error(&working_set, err);
             return false;
         }
 
