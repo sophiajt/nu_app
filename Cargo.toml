@@ -13,3 +13,7 @@ nu-protocol = "0.86.0"
 nu-parser = "0.86.0"
 nu-path = "0.86.0"
 miette = "5.5.0"
+
+[features]
+plugin = []
+which-support = []
