@@ -17,11 +17,10 @@ pub fn create_default_context() -> EngineState {
         // Core
         bind_command! {
             Alias,
-            Ast,
             Break,
+            Collect,
             Const,
             Continue,
-            Debug,
             Def,
             DefEnv,
             Describe,
@@ -30,17 +29,16 @@ pub fn create_default_context() -> EngineState {
             ErrorMake,
             ExportAlias,
             ExportCommand,
+            ExportConst,
             ExportDef,
             ExportDefEnv,
             ExportExtern,
+            ExportExternWrapped,
             ExportUse,
+            ExportModule,
             Extern,
+            ExternWrapped,
             For,
-            Help,
-            HelpAliases,
-            HelpCommands,
-            HelpModules,
-            HelpOperators,
             Hide,
             HideEnv,
             If,
@@ -50,17 +48,28 @@ pub fn create_default_context() -> EngineState {
             OverlayList,
             OverlayNew,
             OverlayHide,
+            LazyMake,
             Let,
             Loop,
-            Metadata,
+            Match,
             Module,
             Mut,
             Return,
+            Scope,
+            ScopeAliases,
+            ScopeCommands,
+            ScopeEngineStats,
+            ScopeExterns,
+            ScopeModules,
+            ScopeVariables,
             Try,
             Use,
             Version,
             While,
         };
+
+        #[cfg(feature = "plugin")]
+        bind_command!(Register);
 
         // Charts
         bind_command! {
@@ -72,7 +81,6 @@ pub fn create_default_context() -> EngineState {
             All,
             Any,
             Append,
-            Collect,
             Columns,
             Compact,
             Default,
@@ -92,6 +100,8 @@ pub fn create_default_context() -> EngineState {
             GroupBy,
             Headers,
             Insert,
+            Items,
+            Join,
             SplitBy,
             Take,
             Merge,
@@ -130,6 +140,7 @@ pub fn create_default_context() -> EngineState {
 
         // Misc
         bind_command! {
+            Source,
             Tutor,
         };
 
@@ -153,6 +164,33 @@ pub fn create_default_context() -> EngineState {
             External,
             NuCheck,
             Sys,
+        };
+
+        // Help
+        bind_command! {
+            Help,
+            HelpAliases,
+            HelpExterns,
+            HelpCommands,
+            HelpModules,
+            HelpOperators,
+            HelpEscapes,
+        };
+
+        // Debug
+        bind_command! {
+            Ast,
+            Debug,
+            DebugInfo,
+            Explain,
+            Inspect,
+            Metadata,
+            Profile,
+            TimeIt,
+            View,
+            ViewFiles,
+            ViewSource,
+            ViewSpan,
         };
 
         #[cfg(unix)]
@@ -190,40 +228,32 @@ pub fn create_default_context() -> EngineState {
             Str,
             StrCapitalize,
             StrContains,
+            StrDistance,
             StrDowncase,
+            StrEndswith,
+            StrExpand,
             StrJoin,
             StrReplace,
             StrIndexOf,
             StrLength,
+            StrReverse,
             StrStartsWith,
             StrSubstring,
             StrTrim,
-            StrUpcase
+            StrUpcase,
+            FormatDate,
+            FormatDuration,
+            FormatFilesize,
         };
-
-        // Bytes
-        bind_command! {
-            Bytes,
-            BytesLen,
-            BytesStartsWith,
-            BytesEndsWith,
-            BytesReverse,
-            BytesReplace,
-            BytesAdd,
-            BytesAt,
-            BytesIndexOf,
-            BytesCollect,
-            BytesRemove,
-            BytesBuild,
-        }
 
         // FileSystem
         bind_command! {
             Cd,
-            Cp,
             Ls,
             Mkdir,
             Mv,
+            Cp,
+            UCp,
             Open,
             Start,
             Rm,
@@ -240,6 +270,8 @@ pub fn create_default_context() -> EngineState {
             Clear,
             Du,
             Input,
+            InputList,
+            InputListen,
             Kill,
             Sleep,
             TermSize,
@@ -248,7 +280,6 @@ pub fn create_default_context() -> EngineState {
         // Date
         bind_command! {
             Date,
-            DateFormat,
             DateHumanize,
             DateListTimezones,
             DateNow,
@@ -285,7 +316,6 @@ pub fn create_default_context() -> EngineState {
             ToToml,
             ToTsv,
             Touch,
-            Use,
             Upsert,
             Where,
             ToXml,
@@ -300,22 +330,23 @@ pub fn create_default_context() -> EngineState {
 
         // Conversions
         bind_command! {
+            Fill,
             Into,
             IntoBool,
             IntoBinary,
             IntoDatetime,
-            IntoDecimal,
             IntoDuration,
+            IntoFloat,
             IntoFilesize,
             IntoInt,
             IntoRecord,
             IntoString,
+            IntoValue,
         };
 
         // Env
         bind_command! {
             ExportEnv,
-            LetEnv,
             LoadEnv,
             SourceEnv,
             WithEnv,
@@ -345,13 +376,35 @@ pub fn create_default_context() -> EngineState {
             MathLog,
         };
 
+        // Bytes
+        bind_command! {
+            Bytes,
+            BytesLen,
+            BytesStartsWith,
+            BytesEndsWith,
+            BytesReverse,
+            BytesReplace,
+            BytesAdd,
+            BytesAt,
+            BytesIndexOf,
+            BytesCollect,
+            BytesRemove,
+            BytesBuild
+        }
+
         // Network
         bind_command! {
             Http,
+            HttpDelete,
             HttpGet,
+            HttpHead,
+            HttpPatch,
             HttpPost,
+            HttpPut,
+            HttpOptions,
             Url,
             UrlBuildQuery,
+            UrlDecode,
             UrlEncode,
             UrlJoin,
             UrlParse,
@@ -363,8 +416,9 @@ pub fn create_default_context() -> EngineState {
             Random,
             RandomBool,
             RandomChars,
-            RandomDecimal,
             RandomDice,
+            RandomFloat,
+            RandomInt,
             RandomInteger,
             RandomUuid,
         };
@@ -375,6 +429,7 @@ pub fn create_default_context() -> EngineState {
             Seq,
             SeqDate,
             SeqChar,
+            Unfold,
         };
 
         // Hash
@@ -386,17 +441,14 @@ pub fn create_default_context() -> EngineState {
 
         // Experimental
         bind_command! {
-            ViewSource,
             IsAdmin,
         };
 
-        // Deprecated
+        // Removed
         bind_command! {
-            Source,
+            LetEnv,
+            DateFormat,
         };
-
-        #[cfg(feature = "plugin")]
-        bind_command!(Register);
 
         working_set.render()
     };

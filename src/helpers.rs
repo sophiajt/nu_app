@@ -168,7 +168,7 @@ pub fn create_stack() -> nu_protocol::engine::Stack {
         "PWD".into(),
         Value::String {
             val: path.to_string_lossy().to_string(),
-            span: Span::unknown(),
+            internal_span: Span::unknown(),
         },
     );
 
