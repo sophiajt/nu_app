@@ -6,10 +6,14 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-nu-cmd-lang = "0.84.0"
-nu-command = "0.84.0"
-nu-engine = "0.84.0"
-nu-protocol = "0.84.0"
-nu-parser = "0.84.0"
-nu-path = "0.84.0"
+nu-cmd-lang = "0.86.0"
+nu-command = "0.86.0"
+nu-engine = "0.86.0"
+nu-protocol = "0.86.0"
+nu-parser = "0.86.0"
+nu-path = "0.86.0"
 miette = "5.5.0"
+
+[features]
+plugin = []
+which-support = []
